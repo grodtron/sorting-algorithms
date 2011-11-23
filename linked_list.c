@@ -1,10 +1,8 @@
-#include <stdio.h>
 #include <stdlib.h>
-
 #define NEW_LISTNODE (struct listNode*) malloc(sizeof(struct listNode))
 
 struct listNode {
-   char value;
+   int value;
    struct listNode* next;
    struct listNode* prev;
 };
@@ -36,6 +34,16 @@ void remove_node(struct listNode* node){
    }
 }
 
+void free_list(struct listNode* head){
+   struct listNode* temp;
+   while(head->prev && (head = head->prev)); // make sure that we're at the beginning
+   while(head){ // free every listNode
+      temp = head;
+      head = head->next;
+      free(temp);
+   }
+}
+
 struct listNode* insertion_sort(struct listNode* head){
    struct listNode* scan_temp;
    struct listNode* head_temp;
@@ -60,32 +68,4 @@ struct listNode* insertion_sort(struct listNode* head){
       }
    }
    return new_head;
-}
-
-int main(int argc, const char *argv[])
-{
-   char c; // dummy value
-   struct listNode *list_head  = NEW_LISTNODE;
-   struct listNode *list_position = list_head;
-
-   list_head->prev  = NULL;
-   list_head->next  = NULL;
-
-   while((c = getchar()) != EOF && c != '\n' ){
-      list_position->value = c;
-      add_after(list_position, NEW_LISTNODE);
-      list_position = list_position->next;
-   }
-
-   list_head = insertion_sort(list_head);
-   list_position = list_head;
-
-   while(list_position->next != NULL){
-      putchar(list_position->value);
-      list_position = list_position->next;
-   }
-
-   putchar('\n');
-
-   return 0;
 }
