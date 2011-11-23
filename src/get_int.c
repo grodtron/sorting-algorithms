@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../include/bool.h"
 
-int getInt(int &returnValue, bool &success){
+void getInt(int* returnValue, bool* success){
 
    const int INPUT_LENGTH = 10;
 
@@ -40,10 +41,10 @@ int getInt(int &returnValue, bool &success){
    // otherwise set the status to false (failure)
    if(i){
       input[i] = '\0';
-      success = true;
-      returnValue = atoi(input);
+      *success = true;
+      *returnValue = atoi(input);
    }else{
-      success = false;
+      *success = false;
    }
 }
 

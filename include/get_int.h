@@ -1,4 +1,4 @@
-int getInt(int &returnValue, bool &success);
+void getInt(int* returnValue, bool* success);
 
 /* USAGE:
 

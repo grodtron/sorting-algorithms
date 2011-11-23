@@ -1,5 +1,7 @@
+#define NEW_LISTNODE (struct listNode*) malloc(sizeof(struct listNode))
+
 struct listNode {
-   char value;
+   int value;
    struct listNode* next;
    struct listNode* prev;
 };

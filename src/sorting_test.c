@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
-#include "linked_list.h"
-#include "get_int.h"
+#include "../include/bool.h"
+#include "../include/linked_list.h"
+#include "../include/get_int.h"
 
 int main(int argc, const char *argv[])
 {
@@ -17,7 +19,7 @@ int main(int argc, const char *argv[])
    // get the input list of integers
    while(1){
 
-      getInt(input, inputStatus);
+      getInt(&input, &inputStatus);
 
       if(inputStatus){
          list_position->value = input;
@@ -46,6 +48,14 @@ int main(int argc, const char *argv[])
 
    printf("%.9f\n", elapsed_time * 1e3);
 
+   /*
+   list_position = list_head;
+   while(list_position->next != NULL){
+      printf("%d ", list_position->value);
+      list_position = list_position->next;
+   }
+   putchar('\n');
+*/
    free_list(list_head);
 
    return 0;

@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#define NEW_LISTNODE (struct listNode*) malloc(sizeof(struct listNode))
 
 struct listNode {
    int value;
