@@ -10,7 +10,7 @@ result_dict = {}
 for f in lsdir:
    for line in open(f).readlines():
       line = line.split()
-      if len(line) == 0:
+      if len(line) < 2:
          continue
       if result_dict.has_key(int(line[0])):
          result_dict[int(line[0])] += float(line[1])

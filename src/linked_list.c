@@ -46,15 +46,19 @@ void free_list(struct listNode* head){
 struct listNode* insertion_sort(struct listNode* head){
    struct listNode* scan_temp;
    struct listNode* head_temp;
-   struct listNode* new_head;
+   struct listNode* new_head = head;
    while(head != NULL){
       scan_temp = head;
       head_temp = head;
 
+      // scan backwards until we get to something that is less than the value that
+      // we are considering
       while( scan_temp->prev && scan_temp->prev->value > head_temp->value ){
          scan_temp = scan_temp->prev;
       }
 
+      // move head forward so that we are not referring to it when we do things
+      // to head_temp
       head = head->next;
 
       if(scan_temp != head_temp){

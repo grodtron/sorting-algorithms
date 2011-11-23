@@ -2,7 +2,7 @@ IDIR = include
 SDIR = src
 ODIR = .objects
 
-CFLAGS = -Wall -ggdb
+CFLAGS = -Wall #-ggdb
 
 EXEC_FILE = sorting
 

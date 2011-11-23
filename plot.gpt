@@ -1,0 +1,7 @@
+#!/usr/bin/gnuplot
+
+set terminal jpeg
+set output "averages.jpg"
+
+plot "test_0.1/average.dat" with lines, "test_0.2/average.dat" with lines, "test_0.3/average.dat" with lines, "test_0.4/average.dat" with lines, "test_0.5/average.dat" with lines, "test_0.6/average.dat" with lines, "test_0.7/average.dat" with lines, "test_0.8/average.dat" with lines, "test_0.9/average.dat" with lines
+
