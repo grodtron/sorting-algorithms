@@ -1,3 +1,6 @@
+test_ins_ar
+test_ins_ll
 .objects/*
 *.txt
-data/*
+*.dat
+*.jpg

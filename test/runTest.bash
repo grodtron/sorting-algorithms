@@ -26,17 +26,9 @@ do
 
       for n in {100..20000..100}
       do
-         file=testData$n.dat
-
-         echo -n "making data... "
-         python testData.py $n $sortedness > $file
-         echo "done"
-         
          echo -n "testing $n..."
-         echo "$n  $(cat $file | $sorter)" >> $dir/result_$x.dat
+         echo "$n  $(python testData.py $n $sortedness | $sorter)" >> $dir/result_$x.dat
          echo "done"
-
-         rm $file
       done
 
    done

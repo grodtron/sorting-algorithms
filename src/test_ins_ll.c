@@ -7,6 +7,14 @@
 
 int main(int argc, const char *argv[])
 {
+
+   bool verbose = false;
+   if(argc > 1){
+      if(argv[1][0] == 'v'){
+         verbose = true;
+      }
+   }
+
    int input;
    bool inputStatus;
 
@@ -48,14 +56,20 @@ int main(int argc, const char *argv[])
 
    printf("%.9f\n", elapsed_time * 1e3);
 
-   /*
-   list_position = list_head;
-   while(list_position->next != NULL){
-      printf("%d ", list_position->value);
-      list_position = list_position->next;
+   if(verbose){
+      list_position = list_head;
+
+      while(true){
+         printf("%d ", list_position->value);
+         if(list_position->next != NULL){
+            list_position = list_position->next;
+         }else{
+            break;
+         }
+      }
+      putchar('\n');
    }
-   putchar('\n');
-*/
+
    free_list(list_head);
 
    return 0;
