@@ -1,5 +1,7 @@
-test_ins_ar
-test_ins_ll
+insertion_sort_array
+insertion_sort_linkedlist
+quicksort_array
+
 test/.log
 .objects/*
 *.txt

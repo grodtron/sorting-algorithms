@@ -2,9 +2,9 @@ IDIR = include
 SDIR = src
 ODIR = .objects
 
-CFLAGS = -Wall -std=gnu99 #-ggdb
+CFLAGS = -Wall -std=gnu99 -ggdb
 
-EXEC_FILES = test_ins_ll test_ins_ar
+EXEC_FILES = insertion_sort_array insertion_sort_linkedlist quicksort_array
 
 LIBS = -lrt
 
@@ -14,7 +14,7 @@ CC = gcc
 # first line defines the dependencies, the second line adds the include directory
 # to the front of the names, e.g. linefinder.hpp -> include/linefinder.hpp
 # the two lines that follow perform the same function on the object files.
-_DEPS = get_int.h linked_list.h insertion_sort.h bool.h
+_DEPS = get_int.h linked_list.h insertion_sort.h bool.h parse_args.h quicksort.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 # the .PHONY target specifies that the dependency targets do not refer to files, this prevents conflicts
@@ -34,12 +34,14 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 # This is basically the same as the rule above, except that it is linking object files instead of 
 # compiling them from source. $(LIBS) is a list of all the libraries that need to be linked to.
 
-test_ins_ll: $(patsubst %, $(ODIR)/%, test_ins_ll.o linked_list.o get_int.o  )
+insertion_sort_linkedlist: $(patsubst %, $(ODIR)/%, insertion_sort_linkedlist.o linked_list.o get_int.o parse_args.o  )
 	$(CC) -o $@ $^ $(LIBS) $(CFLAGS) && cp $@ test/
 
-test_ins_ar: $(patsubst %, $(ODIR)/%, test_ins_ar.o insertion_sort.o get_int.o  )
+insertion_sort_array: $(patsubst %, $(ODIR)/%, insertion_sort_array.o insertion_sort.o get_int.o parse_args.o  )
 	$(CC) -o $@ $^ $(LIBS) $(CFLAGS) && cp $@ test/
 
+quicksort_array: $(patsubst %, $(ODIR)/%, quicksort_array.o quicksort.o get_int.o parse_args.o  )
+	$(CC) -o $@ $^ $(LIBS) $(CFLAGS) && cp $@ test/
 
 # the dash in front tells make to ignore the return status of the clean target. For example if
 # make tries to rm a file that doesn't exist (if it doesn't exist, who cares if it wasn't removed)

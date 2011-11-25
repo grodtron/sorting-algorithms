@@ -4,16 +4,14 @@
 #include "../include/bool.h"
 #include "../include/linked_list.h"
 #include "../include/get_int.h"
+#include "../include/parse_args.h"
 
 int main(int argc, const char *argv[])
 {
 
-   bool verbose = false;
-   if(argc > 1){
-      if(argv[1][0] == 'v'){
-         verbose = true;
-      }
-   }
+   struct parameters params;
+
+   parse_args(argc, argv, &params);
 
    int input;
    bool inputStatus;
@@ -54,9 +52,7 @@ int main(int argc, const char *argv[])
    double elapsed_time = difftime(end_time.tv_sec, start_time.tv_sec) + (1e-9 * (double)(end_time.tv_nsec - start_time.tv_nsec)) ;
    // END FINISH TIMING!
 
-   printf("%.9f\n", elapsed_time * 1e3);
-
-   if(verbose){
+   if(params.verbose){
       list_position = list_head;
 
       while(true){
@@ -68,6 +64,8 @@ int main(int argc, const char *argv[])
          }
       }
       putchar('\n');
+   }else{
+      printf("%.9f\n", elapsed_time * 1e3);
    }
 
    free_list(list_head);
