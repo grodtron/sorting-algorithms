@@ -1,3 +1,6 @@
+#ifndef INCLUDE_LINKED_LIST_H
+#define INCLUDE_LINKED_LIST_H
+
 #define NEW_LISTNODE (struct listNode*) malloc(sizeof(struct listNode))
 
 struct listNode {
@@ -15,3 +18,5 @@ void remove_node(struct listNode* node);
 void free_list(struct listNode* head);
 
 struct listNode* insertion_sort(struct listNode* head);
+
+#endif
