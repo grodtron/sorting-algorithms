@@ -1,0 +1,85 @@
+#!/bin/bash
+
+sorter=$1
+reps=$2
+
+function mkdir_if_not_exists {
+   if [ ! -z $1 ] && [ ! -d $1 ]
+   then
+      echo "making directory $1"
+      mkdir $1
+   fi
+}
+
+# Deal with command line options here
+
+# this is a mandatory argument
+if [ -z $sorter ]
+then
+   echo "must supply name of sorting program as first command line arg"
+   exit 0
+fi
+
+# This is not a mandatory argument as we can safely choose a sane default
+if [ -z $reps ]
+then
+   echo "Number of repititions not supplied - defaulting to 1"
+   reps=1
+fi
+
+starttime=$(date)
+
+echo "$starttime: Beginning sortedness test for program $sorter with $reps repititions" >> .log
+
+for sortedness in {1..9}
+do
+
+   sortedness=0.$sortedness # get a decimal value for sortedness
+   dir=sortedness_tests
+
+   mkdir_if_not_exists $dir
+   dir=$dir/$sorter
+   mkdir_if_not_exists $dir
+   dir=$dir/$sortedness
+   mkdir_if_not_exists $dir
+
+   echo "beginning tests for sortedness $sortedness"
+
+   for rep in $(seq $reps)
+   do
+
+      x=$(ls $dir -1 | wc -l);
+
+      echo "beginning repition $rep/$reps for sortedness $sortedness";
+
+      for n in {100..20000..100}
+      do
+         # echo out every other time
+         if [ $(($n%200)) -eq 0 ]
+            then
+            echo -n "|"
+         fi
+         
+         # get python to make random data and pipe it to our sorter. Assume all sorters need the number of items as the first arg
+         echo "$n  $(python testData.py $n $sortedness | ./$sorter $n)" >> $dir/result_$x.dat
+      done
+
+      echo ""
+      echo "completed repition $rep/$reps for sortedness $sortedness";
+
+   done
+
+   echo "done tests for sortedness $sortedness"
+done
+
+echo "$(date): Completed sortedness test for program $sorter with $reps repititions (begun at $starttime)" >> .log
+
+./average sortedness_tests/$sorter
+
+if [ ! -d img ]
+then
+   echo "making directory img/"
+   mkdir img
+fi
+
+./plot sortedness_tests/$sorter img/$sorter.jpg

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ ! -z $2 ]
+then
+   output=$2
+else
+   echo "Please provide an output filename!!"
+   exit 0
+fi
+
+parent=$( echo $1 | awk 'sub("/?$", "")' ) # remove trailing slash if exists
+
+echo "#!/usr/bin/gnuplot" > temp_plot.gpt
+
+echo set terminal jpeg size 1000, 500 >> temp_plot.gpt
+echo set output \"$output\" >> temp_plot.gpt
+
+#echo set key outside right >> temp_plot.gpt
+echo unset key >> temp_plot.gpt
+
+echo set xlabel \"number of data items sorted\" >> temp_plot.gpt
+echo set ylabel \"milliseconds taken\" >> temp_plot.gpt
+
+plot="plot "
+
+echo "setting up plot of directory: $parent"
+
+for file in $(ls $parent | grep .dat)
+do
+   echo -e "\tadding file $parent/$file"
+   plot=$plot"\"$parent/$file\" with lines, "
+done
+
+echo $plot | awk 'sub(".$","")' >> temp_plot.gpt
+
+gnuplot temp_plot.gpt && rm temp_plot.gpt
+
+

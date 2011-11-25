@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Averaging running results"
+
+parent=$( echo $1 | awk 'sub("/?$", "")' ) # since the directory could be inputted with or without a trailing slash we always remove it
+
+for dir in $(ls $parent)
+do
+   dir=$parent/$dir
+   if [ -d $dir ]
+   then
+      echo -ne "\t$dir ... "
+      ./average.py $(ls -1 $dir | awk "sub(\"^\",\"$dir/\")" | grep .dat) > $dir\_average.dat # don't include the average.dat file in the new average
+      echo "done"
+   fi
+done

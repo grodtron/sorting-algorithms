@@ -1,5 +1,6 @@
 test_ins_ar
 test_ins_ll
+test/.log
 .objects/*
 *.txt
 *.dat

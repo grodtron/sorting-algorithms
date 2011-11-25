@@ -21,7 +21,7 @@ DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 # if files with the same names as the dependencies are ever created
 .PHONY: all run clean
 
-all: test_ins_ll test_ins_ar
+all: $(EXEC_FILES)
 
 # sets a general rule for creating object files. $@ and $< are special macros referring to
 # the left and right hand sides of the rule definition respectively, e.g. $@ -> $(ODIR)/%.o
@@ -35,10 +35,10 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 # compiling them from source. $(LIBS) is a list of all the libraries that need to be linked to.
 
 test_ins_ll: $(patsubst %, $(ODIR)/%, test_ins_ll.o linked_list.o get_int.o  )
-	$(CC) -o $@ $^ $(LIBS) $(CFLAGS)
+	$(CC) -o $@ $^ $(LIBS) $(CFLAGS) && cp $@ test/
 
 test_ins_ar: $(patsubst %, $(ODIR)/%, test_ins_ar.o insertion_sort.o get_int.o  )
-	$(CC) -o $@ $^ $(LIBS) $(CFLAGS)
+	$(CC) -o $@ $^ $(LIBS) $(CFLAGS) && cp $@ test/
 
 
 # the dash in front tells make to ignore the return status of the clean target. For example if
