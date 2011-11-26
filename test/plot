@@ -15,6 +15,8 @@ echo "#!/usr/bin/gnuplot" > temp_plot.gpt
 echo set terminal jpeg size 1000, 500 >> temp_plot.gpt
 echo set output \"$output\" >> temp_plot.gpt
 
+echo set yrange [0:1600] >> temp_plot.gpt
+
 #echo set key outside right >> temp_plot.gpt
 echo unset key >> temp_plot.gpt
 

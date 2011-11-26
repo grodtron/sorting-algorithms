@@ -1,0 +1,69 @@
+#!/bin/bash
+
+sorter=$1
+reps=$2
+
+function mkdir_if_not_exists {
+   if [ ! -z $1 ] && [ ! -d $1 ]
+   then
+      echo "making directory $1"
+      mkdir $1
+   fi
+}
+
+# Deal with command line options here
+
+# this is a mandatory argument
+if [ -z $sorter ]
+then
+   echo "must supply name of sorting program as first command line arg"
+   exit 0
+fi
+
+# This is not a mandatory argument as we can safely choose a sane default
+if [ -z $reps ]
+then
+   echo "Number of repititions not supplied - defaulting to 100"
+   reps=100
+fi
+
+starttime=$(date)
+
+echo "$starttime: Beginning littledata test for program $sorter with $reps repititions" >> .log
+
+dir=littledata_tests
+
+mkdir_if_not_exists $dir
+dir=$dir/$sorter
+mkdir_if_not_exists $dir
+
+for rep in $(seq $reps)
+do
+
+   x=$(ls $dir -1 | wc -l);
+
+   # echo out every other time
+   if [ $(($rep%5)) -eq 0 ]
+      then
+      echo -e "\t($rep/$reps) ";
+   fi
+
+   for n in {10..20..1}
+   do
+      # get python to make random data and pipe it to our sorter. Assume all sorters need the number of items as the first arg
+      echo "$n  $(python testData.py $n 0.0 | ./$sorter $n)" >> $dir/result_$x.dat
+   done
+
+done
+
+echo "$(date): Completed littledata test for program $sorter with $reps repititions (begun at $starttime)" >> .log
+
+./average littledata_tests
+
+if [ ! -d img ]
+then
+   echo "making directory img/"
+   mkdir img
+fi
+
+./plot littledata_tests img/littledata.jpg

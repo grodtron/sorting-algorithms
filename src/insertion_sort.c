@@ -15,6 +15,8 @@ void insertion_sort(int data[], int length){
       for (int j = i; j > 0; --j) {
          if(data[j] < data[j - 1]){
             swap(data + j, data + j - 1);
+         }else{
+            break;
          }
       }
    }

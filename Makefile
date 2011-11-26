@@ -40,10 +40,12 @@ insertion_sort_linkedlist: $(patsubst %, $(ODIR)/%, insertion_sort_linkedlist.o 
 insertion_sort_array: $(patsubst %, $(ODIR)/%, insertion_sort_array.o insertion_sort.o get_int.o parse_args.o  )
 	$(CC) -o $@ $^ $(LIBS) $(CFLAGS) && cp $@ test/
 
-quicksort_array: $(patsubst %, $(ODIR)/%, quicksort_array.o quicksort.o get_int.o parse_args.o  )
+quicksort_array: $(patsubst %, $(ODIR)/%, quicksort_array.o quicksort.o insertion_sort.o get_int.o parse_args.o  )
 	$(CC) -o $@ $^ $(LIBS) $(CFLAGS) && cp $@ test/
 
 # the dash in front tells make to ignore the return status of the clean target. For example if
 # make tries to rm a file that doesn't exist (if it doesn't exist, who cares if it wasn't removed)
 clean:
-	-$(RM) $(ODIR)/* $(EXEC_FILE) 
+	$(RM) $(ODIR)/*;
+	$(RM) $(EXEC_FILES);
+	$(RM) $(patsubst %, test/%,  $(EXEC_FILES) );

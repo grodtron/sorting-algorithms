@@ -50,7 +50,7 @@ do
 
       x=$(ls $dir -1 | wc -l);
 
-      echo "beginning repition $rep/$reps for sortedness $sortedness";
+      echo -en "\t($rep/$reps) ";
 
       for n in {100..20000..100}
       do
@@ -64,8 +64,7 @@ do
          echo "$n  $(python testData.py $n $sortedness | ./$sorter $n)" >> $dir/result_$x.dat
       done
 
-      echo ""
-      echo "completed repition $rep/$reps for sortedness $sortedness";
+      echo " done!";
 
    done
 

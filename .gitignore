@@ -2,6 +2,12 @@ insertion_sort_array
 insertion_sort_linkedlist
 quicksort_array
 
+test/insertion_sort_array
+test/insertion_sort_linkedlist
+test/quicksort_array
+
+*.swp
+
 test/.log
 .objects/*
 *.txt
