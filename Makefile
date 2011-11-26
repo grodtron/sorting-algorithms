@@ -10,6 +10,8 @@ LIBS = -lrt
 
 CC = gcc
 
+RMDIR = rm -rf
+
 
 # first line defines the dependencies, the second line adds the include directory
 # to the front of the names, e.g. linefinder.hpp -> include/linefinder.hpp
@@ -28,7 +30,12 @@ all: $(EXEC_FILES)
 # $< -> $(SDIR)/%.cpp
 # -c option says not to run the linker, but instead output the .o file
 # -o $@ says to put the output into a file named the same as the name of the rule, e.g. listfinder.o
-$(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
+
+# make sure that the objects directory exists!
+$(ODIR):
+	mkdir $(ODIR)
+
+$(ODIR)/%.o: $(SDIR)/%.c $(DEPS) $(ODIR)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 # This is basically the same as the rule above, except that it is linking object files instead of 

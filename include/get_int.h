@@ -1,4 +1,7 @@
+#ifndef INCLUDE_GET_INT_H
+#define INCLUDE_GET_INT_H
 void getInt(int* returnValue, bool* success);
+#endif
 
 /* USAGE:
 
